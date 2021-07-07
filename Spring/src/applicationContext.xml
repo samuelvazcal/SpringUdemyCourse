@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- load the properties file: file.properties-->
+    <context:property-placeholder location="classpath:info.properties"/>
+
+    <!-- Define your beans here -->
+    <!-- define the dependency-->
+    <bean id="myMotivation"
+          class="com.samuelvazquez.springdemo.DailyMotivationService">
+    </bean>
+    <bean id="myCoach"
+        class="com.samuelvazquez.springdemo.BaseballCoach">
+        <!-- set up constructor injection -->
+        <constructor-arg ref="myMotivation"/>
+    </bean>
+    <bean id="myTrackCoach"
+          class="com.samuelvazquez.springdemo.TrackCoach">
+        <constructor-arg ref="myMotivation"/>
+    </bean>
+    <bean id="myArcheryCoach"
+          class="com.samuelvazquez.springdemo.ArcheryCoach">
+        <property name="motivationService" ref="myMotivation" />
+        <!-- injecting literal values
+        <property name="emailAddress" value="samuel@testemail.com" />
+        <property name="team" value="Devs Mx" />
+        -->
+        <!-- injecting values from a properties file -->
+        <property name="emailAddress" value="${foo.email}" />
+        <property name="team" value="${foo.team}" />
+    </bean>
+
+    <!-- Activity 2 -->
+    <bean id="myRandomMotivation"
+          class="com.samuelvazquez.springdemo.RandomMotivationService">
+    </bean>
+    <bean id="mySoccerCoach"
+        class="com.samuelvazquez.springdemo.SoccerCoach">
+        <property name="randomMotivationService" ref="myRandomMotivation"/>
+    </bean>
+
+
+
+
+    <!-- Beans for sundayexercise-->
+    <bean id="myInformation"
+        class="com.samuelvazquez.sundayexercise.CaloriesInformationService">
+    </bean>
+
+    <bean id="myChickenSoupRecipe"
+        class="com.samuelvazquez.sundayexercise.ChickenSoupRecipe">
+        <constructor-arg ref="myInformation"/>
+    </bean>
+
+    <bean id="mySweetSpicedPorkKebabs"
+        class="com.samuelvazquez.sundayexercise.SweetSpicedPorkKebabs">
+        <property name="informationService" ref="myInformation" />
+        <property name="calories" value="178" />
+    </bean>
+</beans>
+
+
+
+
+
