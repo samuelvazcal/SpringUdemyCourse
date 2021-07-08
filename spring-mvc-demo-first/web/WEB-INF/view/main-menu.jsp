@@ -18,7 +18,9 @@
     <a href="hello/showForm">Request Mapping to Controller example</a>
     <br>
     <a href="student/showForm">Student Form</a>
-<br><br>
+    <br>
+    <a href="customer/showForm">Customer Form</a>
+    <br><br>
     <!-- <img src="https://jesusramirezguerrero.files.wordpress.com/2014/02/p1.png"> -->
     <!-- <img src="${pageContext.request.contextPath}/resources/images/spring.png" /> -->
     <img src="${pageContext.request.contextPath}/resources/images/spring_logo2.jpg" />
