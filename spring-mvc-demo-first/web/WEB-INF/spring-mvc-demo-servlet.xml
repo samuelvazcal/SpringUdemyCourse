@@ -25,7 +25,13 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<!--load static context-->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<!--load custom message resources-->
+	<bean id="messageSource"
+		  class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="resources.messages" />
+	</bean>
 
 </beans>
 
