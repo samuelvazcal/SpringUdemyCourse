@@ -6,10 +6,9 @@ import com.samuelvazquez.jdbc.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 
-public class FetchJoinDemo {
+public class CreateInstructorDemo {
     public static void main(String[] args) {
         //create session factory
         SessionFactory factory = new Configuration()
@@ -22,33 +21,23 @@ public class FetchJoinDemo {
         Session session = factory.getCurrentSession();
 
         try {
+            // create the objects
+            Instructor tempInstructor = new Instructor("Michael","Scott","m1ch43l@testuapp.com");
+            InstructorDetail tempInstructorDetail = new InstructorDetail("thescrantonman","sell paper");
+
+            // associate the objects
+            tempInstructor.setInstructorDetail(tempInstructorDetail);
             //start a transaction
             session.beginTransaction();
 
-            //option 2: Hibernate query with HQL
+            // save the instructor
+            // this will ALSO save the details object because of CascadeType.ALL
+            //
+            System.out.println("Saving instructor: " + tempInstructor);
 
-            //get the instructor from db
-            int theId = 1;
-
-            Query<Instructor> query = session.createQuery("select i from Instructor i" + " JOIN FETCH i.courses " +
-                            " where i.id =: theInstructorId", Instructor.class);
-
-            //set parameter on query
-            query.setParameter("theInstructorId",theId);
-
-            //execute query and get instructor
-            Instructor tempInstructor = query.getSingleResult();
-
-            System.out.println("> Instructor" + tempInstructor);
-
+            session.save(tempInstructor);
             // commit transaction
             session.getTransaction().commit();
-            session.close();
-            System.out.println("> The session is now closed!");
-
-
-            System.out.println("Courses: " + tempInstructor.getCourses());
-            System.out.println("> Done!");
         } finally {
             session.close();
             factory.close();

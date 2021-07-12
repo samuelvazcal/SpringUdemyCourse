@@ -6,10 +6,11 @@ import com.samuelvazquez.jdbc.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 
-public class FetchJoinDemo {
+public class CreateCoursesDemo {
     public static void main(String[] args) {
         //create session factory
         SessionFactory factory = new Configuration()
@@ -25,30 +26,24 @@ public class FetchJoinDemo {
             //start a transaction
             session.beginTransaction();
 
-            //option 2: Hibernate query with HQL
-
             //get the instructor from db
             int theId = 1;
+            Instructor tempInstructor = session.get(Instructor.class,theId);
+            //create some courses
+            Course tempCourse1 = new Course("How to sell paper");
+            Course tempCourse2 = new Course("The art of being a salesman");
 
-            Query<Instructor> query = session.createQuery("select i from Instructor i" + " JOIN FETCH i.courses " +
-                            " where i.id =: theInstructorId", Instructor.class);
+            //add courses to instructor
+            tempInstructor.add(tempCourse1);
+            tempInstructor.add(tempCourse2);
 
-            //set parameter on query
-            query.setParameter("theInstructorId",theId);
-
-            //execute query and get instructor
-            Instructor tempInstructor = query.getSingleResult();
-
-            System.out.println("> Instructor" + tempInstructor);
+            //save the courses
+            session.save(tempCourse1);
+            session.save(tempCourse2);
 
             // commit transaction
             session.getTransaction().commit();
-            session.close();
-            System.out.println("> The session is now closed!");
-
-
-            System.out.println("Courses: " + tempInstructor.getCourses());
-            System.out.println("> Done!");
+            System.out.println("Done!");
         } finally {
             session.close();
             factory.close();

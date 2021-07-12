@@ -6,10 +6,9 @@ import com.samuelvazquez.jdbc.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 
-public class FetchJoinDemo {
+public class DeleteCourseDemo {
     public static void main(String[] args) {
         //create session factory
         SessionFactory factory = new Configuration()
@@ -25,30 +24,18 @@ public class FetchJoinDemo {
             //start a transaction
             session.beginTransaction();
 
-            //option 2: Hibernate query with HQL
+            //get a course
+            int theId = 10;
+            Course tempCourse = session.get(Course.class,theId);
 
+            //delete course
+            System.out.println("Deleting course: " + tempCourse);
             //get the instructor from db
-            int theId = 1;
-
-            Query<Instructor> query = session.createQuery("select i from Instructor i" + " JOIN FETCH i.courses " +
-                            " where i.id =: theInstructorId", Instructor.class);
-
-            //set parameter on query
-            query.setParameter("theInstructorId",theId);
-
-            //execute query and get instructor
-            Instructor tempInstructor = query.getSingleResult();
-
-            System.out.println("> Instructor" + tempInstructor);
+            session.delete(tempCourse);
 
             // commit transaction
             session.getTransaction().commit();
-            session.close();
-            System.out.println("> The session is now closed!");
-
-
-            System.out.println("Courses: " + tempInstructor.getCourses());
-            System.out.println("> Done!");
+            System.out.println("Done!");
         } finally {
             session.close();
             factory.close();

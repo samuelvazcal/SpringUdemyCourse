@@ -1,22 +1,19 @@
 package com.samuelvazquez.jdbc.demo;
 
-import com.samuelvazquez.jdbc.hibernate.demo.entity.Course;
 import com.samuelvazquez.jdbc.hibernate.demo.entity.Instructor;
 import com.samuelvazquez.jdbc.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 
-public class FetchJoinDemo {
+public class GetInstructorDetailDemo {
     public static void main(String[] args) {
         //create session factory
         SessionFactory factory = new Configuration()
                         .configure("hibernate.cfg.xml")
                         .addAnnotatedClass(Instructor.class)
                         .addAnnotatedClass(InstructorDetail.class)
-                        .addAnnotatedClass(Course.class)
                         .buildSessionFactory();
         // create session
         Session session = factory.getCurrentSession();
@@ -25,30 +22,23 @@ public class FetchJoinDemo {
             //start a transaction
             session.beginTransaction();
 
-            //option 2: Hibernate query with HQL
+            //get the instructor detail object
+            int theId = 100;
+            InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class,theId);
 
-            //get the instructor from db
-            int theId = 1;
+            //print the instructor detail
+            System.out.println("tempInstructorDetail: " + tempInstructorDetail);
 
-            Query<Instructor> query = session.createQuery("select i from Instructor i" + " JOIN FETCH i.courses " +
-                            " where i.id =: theInstructorId", Instructor.class);
-
-            //set parameter on query
-            query.setParameter("theInstructorId",theId);
-
-            //execute query and get instructor
-            Instructor tempInstructor = query.getSingleResult();
-
-            System.out.println("> Instructor" + tempInstructor);
+            //print the associated instructor
+            System.out.println("the associated instructor: " + tempInstructorDetail.getInstructor());
 
             // commit transaction
             session.getTransaction().commit();
-            session.close();
-            System.out.println("> The session is now closed!");
 
-
-            System.out.println("Courses: " + tempInstructor.getCourses());
-            System.out.println("> Done!");
+            System.out.println("Done!");
+        }
+        catch(Exception e) {
+            e.printStackTrace();
         } finally {
             session.close();
             factory.close();
