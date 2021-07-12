@@ -1,5 +1,7 @@
 package com.samuelvazquez.jdbc.hibernate.demo.entity;
 
+import org.hibernate.engine.internal.Cascade;
+
 import javax.persistence.*;
 
 @Entity
@@ -32,7 +34,8 @@ public class InstructorDetail {
     //add new field for instructor, also getter and setters
     // add OneToOne annotation
 
-    @OneToOne(mappedBy = "instructorDetail",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "instructorDetail",cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH})
     private Instructor instructor;
 
     public Instructor getInstructor() {

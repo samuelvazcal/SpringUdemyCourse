@@ -27,10 +27,10 @@ public class CreateDemo {
 //            InstructorDetail tempInstructorDetail = new InstructorDetail("mate0S","embedded systems");
 //            Instructor tempInstructor = new Instructor("Elliot","Alderson","ell10t0@testuapp.com");
 //            InstructorDetail tempInstructorDetail = new InstructorDetail("fsociety","hacking");
-//            Instructor tempInstructor = new Instructor("Elliot","Gandalf","g4nd4lf@testuapp.com");
-//            InstructorDetail tempInstructorDetail = new InstructorDetail("mastermagic4u","do tricks");
-            Instructor tempInstructor = new Instructor("Boring","Teacher","d3l3t3m3@testuapp.com");
-            InstructorDetail tempInstructorDetail = new InstructorDetail("4www","do nothing");
+            Instructor tempInstructor = new Instructor("Gandalf","The Grey","g4nd4lf@testuapp.com");
+            InstructorDetail tempInstructorDetail = new InstructorDetail("middleearthmagic4u","do tricks");
+//            Instructor tempInstructor = new Instructor("Boring","Teacher","d3l3t3m3@testuapp.com");
+//            InstructorDetail tempInstructorDetail = new InstructorDetail("4www","do nothing");
 
             // associate the objects
             tempInstructor.setInstructorDetail(tempInstructorDetail);
