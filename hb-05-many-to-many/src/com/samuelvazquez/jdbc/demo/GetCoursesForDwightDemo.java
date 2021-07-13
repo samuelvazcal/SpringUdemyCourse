@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-public class CreateCourseAndStudentsDemo {
+public class GetCoursesForDwightDemo {
     public static void main(String[] args) {
         //create session factory
         SessionFactory factory = new Configuration()
@@ -21,30 +21,15 @@ public class CreateCourseAndStudentsDemo {
         Session session = factory.getCurrentSession();
 
         try {
-            //start a transaction
+            // start a transaction
             session.beginTransaction();
 
-            //create a course
-            Course tempCourse = new Course("Michael Scott and how to be a leader");
+            // get the student Dwight from database
+            int studentId = 2;
+            Student tempStudent = session.get(Student.class,studentId);
 
-            //save the course
-            System.out.println("\nSaving the course...");
-            session.save(tempCourse);
-            System.out.println("Saved the course: " + tempCourse);
-
-            //create the students
-            Student tempStudent1 = new Student("Jim", "Halpert","j1mh@testuapp.com");
-            Student tempStudent2 = new Student("Dwight","Schrute","dw1ght@testuapp.com");
-
-            //add students to the course
-            tempCourse.addStudent(tempStudent1);
-            tempCourse.addStudent(tempStudent2);
-
-            //save the students
-            System.out.println("\nSaving students...");
-            session.save(tempStudent1);
-            session.save(tempStudent2);
-            System.out.println("Saved students" + tempCourse.getStudents());
+            System.out.println("\n Loaded student: " + tempStudent);
+            System.out.println("Course: " + tempStudent.getCourses());
 
             // commit transaction
             session.getTransaction().commit();

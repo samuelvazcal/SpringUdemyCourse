@@ -5,8 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.swing.*;
 
-public class CreateCourseAndStudentsDemo {
+
+public class AddCoursesForDwightDemo {
     public static void main(String[] args) {
         //create session factory
         SessionFactory factory = new Configuration()
@@ -21,30 +23,28 @@ public class CreateCourseAndStudentsDemo {
         Session session = factory.getCurrentSession();
 
         try {
-            //start a transaction
+            // start a transaction
             session.beginTransaction();
 
-            //create a course
-            Course tempCourse = new Course("Michael Scott and how to be a leader");
+            // get the student Dwight from database
+            int studentId = 2;
+            Student tempStudent = session.get(Student.class,studentId);
 
-            //save the course
-            System.out.println("\nSaving the course...");
-            session.save(tempCourse);
-            System.out.println("Saved the course: " + tempCourse);
+            System.out.println("\n Loaded student: " + tempStudent);
+            System.out.println("Course: " + tempStudent.getCourses());
 
-            //create the students
-            Student tempStudent1 = new Student("Jim", "Halpert","j1mh@testuapp.com");
-            Student tempStudent2 = new Student("Dwight","Schrute","dw1ght@testuapp.com");
+            // create more courses
+            Course tempCourse1 = new Course("How to be the best farmer and salesman");
+            Course tempCourse2 = new Course("Battlestar Galactica Leadership");
 
-            //add students to the course
-            tempCourse.addStudent(tempStudent1);
-            tempCourse.addStudent(tempStudent2);
+            // add student to courses
+            tempCourse1.addStudent(tempStudent);
+            tempCourse2.addStudent(tempStudent);
 
-            //save the students
-            System.out.println("\nSaving students...");
-            session.save(tempStudent1);
-            session.save(tempStudent2);
-            System.out.println("Saved students" + tempCourse.getStudents());
+            // save the courses
+            System.out.println("\nSaving the courses...");
+            session.save(tempCourse1);
+            session.save(tempCourse2);
 
             // commit transaction
             session.getTransaction().commit();
