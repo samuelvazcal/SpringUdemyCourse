@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CustomerController {
 
     @RequestMapping("/list")
-    public String listCustomers(Model model) {
+    public String listCustomers(Model themodel) {
         return "list-customers";
     }
 }
