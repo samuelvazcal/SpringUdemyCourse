@@ -11,9 +11,22 @@ public class MyDemoLoggingAspect {
 
     // let's start with an @Before advice
 
-    @Before("execution(public void addAccount())")
+    // matching an specific class bi its fully qualified name
+//    @Before("execution(public void com.samuelvazquez.aopdemo.dao.AccountDAO.addAccount())")
+//    public void beforeAddAccountAdvice() {
+//        System.out.println("\n ===> Executing @Before advice on method");
+//    }
+
+    // matching classes using wildcards
+//    @Before("execution(public void add*())")
+//    public void beforeAddAccountAdvice() {
+//        System.out.println("\n ===> Executing @Before advice on method")
+//    }
+
+    //matching classes ignoring return types of classes using wildcards
+    @Before("execution(* add*())")
     public void beforeAddAccountAdvice() {
-        System.out.println("\n ===> Executing @Before advice on AddAccount()");
+        System.out.println("\n ===> Executing @Before advice on method");
     }
 
 }
