@@ -27,6 +27,15 @@
         <br><br>
         Role(s): <security:authentication property="principal.authorities" />
     </p>
+
+    <hr>
+        <!-- add a link to point to /leaders --- this is for the managers -->
+    <p>
+        <a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
+        (Only for Manager peeps)
+    </p>
+    <hr>
+
     <hr>
     <!-- add a logout button -->
     <form:form action="${pageContext.request.contextPath}/logout"
