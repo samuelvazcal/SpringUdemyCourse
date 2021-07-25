@@ -46,34 +46,4 @@ public class StudentRestController {
         return theStudents.get(studentId);
     }
 
-    // add an exception handler using @ExceptionHandler
-    // this is an exception handler
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException e) {
-
-        // create a StudentErrorResponse
-        StudentErrorResponse error = new StudentErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(e.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-
-        // return ResponseEntity
-        // error, body of the response |
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-    }
-
-    // add another exception handler --- to catch any exception (catch all)
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(Exception e) {
-
-        // create a StudentErrorResponse
-        StudentErrorResponse error = new StudentErrorResponse();
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        //error.setMessage(e.getMessage());
-        error.setMessage("you typed bad input");
-        error.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
-    }
-
 }
